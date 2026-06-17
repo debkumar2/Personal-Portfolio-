@@ -152,7 +152,7 @@ const Navbar = () => {
         initial={{ y: -100, opacity: 0 }}
         animate={{ y: 0, opacity: 1 }}
         transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
-        className="fixed top-6 left-1/2 -translate-x-1/2 z-50 flex items-center justify-between px-8 py-3 bg-background/60 backdrop-blur-xl border border-border rounded-full w-[90%] max-w-4xl shadow-xl transition-colors duration-500"
+        className="fixed top-6 left-1/2 -translate-x-1/2 z-[100] flex items-center justify-between px-8 py-3 bg-background/60 backdrop-blur-xl border border-border rounded-full w-[90%] max-w-4xl shadow-xl transition-colors duration-500"
       >
         <MagneticItem>
           <div className="text-xl font-bold font-sans tracking-tighter text-foreground">

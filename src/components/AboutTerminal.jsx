@@ -106,7 +106,27 @@ const AboutBento = () => {
               <div className="flex items-center gap-3 text-sm group/item">
                 <MapPin size={14} className="text-muted group-hover/item:text-foreground transition-colors" />
                 <span className="text-muted font-mono">Location</span>
-                <span className="text-foreground ml-auto font-mono">India 🇮🇳</span>
+                <span className="text-foreground ml-auto font-mono flex items-center gap-1.5">
+                  India
+                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" className="w-4 h-4 rounded-sm overflow-hidden">
+                    <path fill="#f93" d="M0 0h512v170.7H0z"/>
+                    <path fill="#fff" d="M0 170.7h512v170.7H0z"/>
+                    <path fill="#128807" d="M0 341.3h512V512H0z"/>
+                    <circle cx="256" cy="256" r="35" fill="#000080"/>
+                    <circle cx="256" cy="256" r="28" fill="#fff"/>
+                    <g fill="#000080">
+                      <circle cx="256" cy="256" r="4"/>
+                      <path d="M256 226l2 30-2 2-2-2z"/>
+                      <path d="M256 286l-2-30 2-2 2 2z"/>
+                      <path d="M226 256l30-2 2 2-2 2z"/>
+                      <path d="M286 256l-30 2-2-2 2-2z"/>
+                      <path d="M235 235l21 21-1 3-3-1z"/>
+                      <path d="M277 277l-21-21 1-3 3 1z"/>
+                      <path d="M235 277l21-21 3 1-1 3z"/>
+                      <path d="M277 235l-21 21-3-1 1-3z"/>
+                    </g>
+                  </svg>
+                </span>
               </div>
               <div className="w-full h-[1px] bg-border" />
               <div className="flex items-center gap-3 text-sm group/item">

@@ -1,4 +1,4 @@
-import { useRef } from 'react';
+import { useRef, useState } from 'react';
 import gsap from 'gsap';
 import { useGSAP } from '@gsap/react';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
@@ -10,6 +10,39 @@ gsap.registerPlugin(ScrollTrigger);
 
 const Contact = () => {
   const container = useRef();
+  const [status, setStatus] = useState(''); // '', 'loading', 'success', 'error'
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    setStatus('loading');
+    
+    try {
+      const response = await fetch("https://formsubmit.co/ajax/debkumarmondal111@gmail.com", {
+        method: "POST",
+        headers: { 
+            'Content-Type': 'application/json',
+            'Accept': 'application/json'
+        },
+        body: JSON.stringify({
+            name: e.target.name.value,
+            email: e.target.email.value,
+            message: e.target.message.value
+        })
+      });
+      
+      if (response.ok) {
+        setStatus('success');
+        e.target.reset();
+        setTimeout(() => setStatus(''), 5000);
+      } else {
+        setStatus('error');
+        setTimeout(() => setStatus(''), 5000);
+      }
+    } catch (error) {
+      setStatus('error');
+      setTimeout(() => setStatus(''), 5000);
+    }
+  };
 
   useGSAP(() => {
     const tl = gsap.timeline({
@@ -53,22 +86,23 @@ const Contact = () => {
               </p>
               
               <a 
-                href="mailto:hello@example.com" 
-                className="inline-flex items-center gap-4 text-2xl font-bold text-foreground hover:text-foreground/80 transition-colors mb-16 break-all group/mail"
+                href="mailto:debkumarmondal111@gmail.com" 
+                className="inline-flex items-center gap-2 sm:gap-4 text-sm sm:text-base md:text-xl lg:text-2xl font-bold text-foreground hover:text-foreground/80 transition-colors mb-16 break-words w-full group/mail"
               >
-                <Mail size={24} className="text-foreground flex-shrink-0 group-hover/mail:scale-110 transition-transform" />
-                hello@example.com
+                <Mail size={24} className="text-foreground flex-shrink-0 group-hover/mail:scale-110 transition-transform hidden sm:block" />
+                <Mail size={20} className="text-foreground flex-shrink-0 group-hover/mail:scale-110 transition-transform sm:hidden" />
+                <span className="truncate">debkumarmondal111@gmail.com</span>
               </a>
             </div>
 
             <div className="flex gap-4 relative z-10" style={{ transform: "translateZ(40px)" }}>
-              <a href="#" className="w-14 h-14 bg-border rounded-2xl flex items-center justify-center text-muted hover:bg-foreground hover:text-background transition-all hover:-translate-y-1">
+              <a href="https://github.com/debkumar2" target="_blank" rel="noopener noreferrer" className="w-14 h-14 bg-border rounded-2xl flex items-center justify-center text-muted hover:bg-foreground hover:text-background transition-all hover:-translate-y-1">
                 <FaGithub size={24} />
               </a>
-              <a href="#" className="w-14 h-14 bg-border rounded-2xl flex items-center justify-center text-muted hover:bg-foreground hover:text-background transition-all hover:-translate-y-1">
+              <a href="https://linkedin.com/in/debkumarmondal" target="_blank" rel="noopener noreferrer" className="w-14 h-14 bg-border rounded-2xl flex items-center justify-center text-muted hover:bg-foreground hover:text-background transition-all hover:-translate-y-1">
                 <FaLinkedin size={24} />
               </a>
-              <a href="#" className="w-14 h-14 bg-border rounded-2xl flex items-center justify-center text-muted hover:bg-foreground hover:text-background transition-all hover:-translate-y-1">
+              <a href="https://twitter.com/debkumarmondal" target="_blank" rel="noopener noreferrer" className="w-14 h-14 bg-border rounded-2xl flex items-center justify-center text-muted hover:bg-foreground hover:text-background transition-all hover:-translate-y-1">
                 <FaTwitter size={24} />
               </a>
             </div>
@@ -78,7 +112,7 @@ const Contact = () => {
         {/* Form Bento */}
         <div className="contact-bento md:col-span-3 h-full">
           <TiltCard tiltAmount={2} className="h-full">
-            <form className="bg-gradient-to-br from-card to-background p-8 rounded-3xl border border-border flex flex-col gap-6 group hover:border-foreground/30 transition-colors duration-500 relative overflow-hidden h-full">
+            <form onSubmit={handleSubmit} className="bg-gradient-to-br from-card to-background p-8 rounded-3xl border border-border flex flex-col gap-6 group hover:border-foreground/30 transition-colors duration-500 relative overflow-hidden h-full">
               <div className="absolute inset-0 bg-gradient-to-bl from-foreground/0 to-foreground/0 group-hover:from-foreground/5 group-hover:to-transparent transition-all duration-500 pointer-events-none" />
               <div className="grid md:grid-cols-2 gap-6 relative z-10" style={{ transform: "translateZ(20px)" }}>
                 <div className="relative group/input">
@@ -112,11 +146,20 @@ const Contact = () => {
                 <label htmlFor="message" className="absolute left-4 top-4 text-muted font-mono transition-all peer-focus:-top-3 peer-focus:left-2 peer-focus:text-xs peer-focus:bg-card peer-focus:px-2 peer-focus:text-foreground peer-valid:-top-3 peer-valid:left-2 peer-valid:text-xs peer-valid:bg-card peer-valid:px-2">Message</label>
               </div>
               <button 
-                type="button" 
-                className="w-full relative z-10 bg-foreground text-background font-bold py-4 rounded-xl hover:bg-foreground/80 transition-all font-mono text-lg uppercase tracking-wider hover:scale-[1.02] active:scale-[0.98]"
+                type="submit" 
+                disabled={status === 'loading'}
+                className={`w-full relative z-10 font-bold py-4 rounded-xl transition-all font-mono text-lg uppercase tracking-wider ${
+                  status === 'loading' ? 'bg-foreground/50 text-background cursor-not-allowed' :
+                  status === 'success' ? 'bg-green-500 text-white' :
+                  status === 'error' ? 'bg-red-500 text-white' :
+                  'bg-foreground text-background hover:bg-foreground/80 hover:scale-[1.02] active:scale-[0.98]'
+                }`}
                 style={{ transform: "translateZ(30px)" }}
               >
-                Send Message
+                {status === 'loading' ? 'Sending...' : 
+                 status === 'success' ? 'Message Sent!' : 
+                 status === 'error' ? 'Error! Try Again' : 
+                 'Send Message'}
               </button>
             </form>
           </TiltCard>
